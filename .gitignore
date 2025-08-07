@@ -1,3 +1,11 @@
+# Ignore image directories
+S3_IMAGES/
+S3_IMAGES_EXAMPLE_1/
+PIPELINE_RESULTS/
+
+# Ignore venv
+ic_venv/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]

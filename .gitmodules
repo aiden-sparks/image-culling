@@ -1,0 +1,3 @@
+[submodule "aesthetic_repo"]
+	path = aesthetic_repo
+	url = https://huggingface.co/rsinema/aesthetic-scorer
