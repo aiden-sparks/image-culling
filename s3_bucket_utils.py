@@ -96,7 +96,8 @@ def download_files(bucket_name: str, local_dir_path: str) -> bool:
 
 def output_files(local_dir_path: str, local_output_path: str, files_to_output: List[str]) -> bool:
     """
-    Outputs specific files from a local directory to a local directory.
+    Outputs specific files from a local directory to a local directory,
+    preserving their filenames.
 
     Args:
     - local_dir_path: local path to the directory where the images live
@@ -120,5 +121,39 @@ def output_files(local_dir_path: str, local_output_path: str, files_to_output: L
             continue
         shutil.copy(local_path, local_output_path)
         print(f"Output {local_path} to {local_output_path}")
+
+    return all_success
+
+def output_files_ordered(local_dir_path: str, local_output_path: str, files_to_output: List[str]) -> bool:
+    """
+    Outputs specific files from a local directory to a local directory,
+    assigning a number for the filename.
+
+    Args:
+    - local_dir_path: local path to the directory where the images live
+    - local_output_path: local path to the directory where the images will
+      be output
+    - files_to_output: full filenames of the files in local_dir_path to output
+    
+    Returns:
+    - True if successful, False otherwise
+    """
+    # Make the local output directory if it doesn't exist.
+    os.makedirs(local_output_path, exist_ok=True)
+
+    # Loop over files_to_output and output matching files in local_dir_path
+    all_success = True
+    for idx, filename in enumerate(files_to_output, start=1):
+        local_path = os.path.join(local_dir_path, filename)
+        if not os.path.isfile(local_path):
+            print(f"File not found: {local_path}")
+            all_success = False
+            continue
+        # Get the file extension
+        _, ext = os.path.splitext(filename)
+        output_filename = f"{idx}{ext}"
+        output_path = os.path.join(local_output_path, output_filename)
+        shutil.copy(local_path, output_path)
+        print(f"Output {local_path} to {output_path}")
 
     return all_success

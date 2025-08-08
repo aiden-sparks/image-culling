@@ -28,6 +28,7 @@ def extract_features(img_path, model):
 def find_duplicates(image_dir, threshold=0.9):
     """
     Finds and counts duplicates. This function came with the model.
+    (I've made slight modifications to its output.)
     """
     # Load the pre-trained ResNet50 model
     model = ResNet50(weights='imagenet', include_top=False, pooling='avg')
@@ -116,8 +117,7 @@ def find_duplicate_images(local_dir_path: str, threshold: float = 0.9) -> List[L
     """
     duplicates = find_duplicates(local_dir_path, threshold)
     count, groups = group_duplicates(duplicates)
-    print(f"Found {count} duplicates.")
-    print("Done finding duplicates.")
+    print(f"Found {count} duplicates. Done finding duplicates.")
     return groups
 
 # # Old code from the model's author
