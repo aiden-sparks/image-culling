@@ -7,7 +7,12 @@ import boto3
 from botocore.exceptions import BotoCoreError, ClientError
 from dotenv import load_dotenv
 
-def upload_files_ordered(local_dir_path: str, bucket_name: str, files_to_upload: List[str]) -> bool:
+
+def upload_files_ordered(
+                         local_dir_path: str,
+                         bucket_name: str,
+                         files_to_upload: List[str]
+) -> bool:
     """
     Uploads specific files from a local directory to an S3 bucket. Assumes
     that there exists a local .env file with the appropriate credentials.
@@ -18,7 +23,7 @@ def upload_files_ordered(local_dir_path: str, bucket_name: str, files_to_upload:
     - local_dir_path: local path to the directory where the images live
     - bucket_name: name of the S3 bucket to upload to
     - files_to_upload: full filenames of the files in local_dir_path to upload
-    
+
     Returns:
     - True if successful, False otherwise
     """
@@ -63,7 +68,7 @@ def download_files(bucket_name: str, local_dir_path: str) -> bool:
     - bucket_name: name of the S3 bucket
     - local_dir_path: local path to the directory where the images will
       be downloaded
-    
+
     Returns:
     - True if successful, False otherwise
     """
@@ -94,7 +99,12 @@ def download_files(bucket_name: str, local_dir_path: str) -> bool:
         print(f"No files found in bucket {bucket_name}.")
         return False
 
-def output_files(local_dir_path: str, local_output_path: str, files_to_output: List[str]) -> bool:
+
+def output_files(
+                 local_dir_path: str,
+                 local_output_path: str,
+                 files_to_output: List[str]
+) -> bool:
     """
     Outputs specific files from a local directory to a local directory,
     preserving their filenames.
@@ -104,7 +114,7 @@ def output_files(local_dir_path: str, local_output_path: str, files_to_output: L
     - local_output_path: local path to the directory where the images will
       be output
     - files_to_output: full filenames of the files in local_dir_path to output
-    
+
     Returns:
     - True if successful, False otherwise
     """
@@ -120,21 +130,26 @@ def output_files(local_dir_path: str, local_output_path: str, files_to_output: L
             all_success = False
             continue
         shutil.copy(local_path, local_output_path)
-        print(f"Output {local_path} to {local_output_path}")
 
     return all_success
 
-def output_files_ordered(local_dir_path: str, local_output_path: str, files_to_output: List[str]) -> bool:
+
+def output_files_ordered(
+                         local_dir_path: str,
+                         local_output_path: str,
+                         files_to_output: List[str]
+) -> bool:
     """
     Outputs specific files from a local directory to a local directory,
-    assigning a number for the filename.
+    assigning a number for the filename, where the first file in
+    files_to_output is 1.*, the second is 2.*, etc.
 
     Args:
     - local_dir_path: local path to the directory where the images live
     - local_output_path: local path to the directory where the images will
       be output
     - files_to_output: full filenames of the files in local_dir_path to output
-    
+
     Returns:
     - True if successful, False otherwise
     """
@@ -154,6 +169,5 @@ def output_files_ordered(local_dir_path: str, local_output_path: str, files_to_o
         output_filename = f"{idx}{ext}"
         output_path = os.path.join(local_output_path, output_filename)
         shutil.copy(local_path, output_path)
-        print(f"Output {local_path} to {output_path}")
 
     return all_success

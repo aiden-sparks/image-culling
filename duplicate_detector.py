@@ -14,6 +14,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 # from tensorflow.keras.preprocessing import image
 # from tensorflow.keras.applications.resnet50 import preprocess_input
 
+
 def extract_features(img_path, model):
     """
     Extracts a feature vector from an image. This function came with the model.
@@ -24,6 +25,7 @@ def extract_features(img_path, model):
     img_data = preprocess_input(img_data)
     features = model.predict(img_data)
     return features.flatten()
+
 
 def find_duplicates(image_dir, threshold=0.9):
     """
@@ -63,6 +65,7 @@ def find_duplicates(image_dir, threshold=0.9):
 
     return duplicates
 
+
 def group_duplicates(duplicate_pairs):
     """
     Takes pairs of duplicate images and creates a list of lists where each
@@ -101,7 +104,11 @@ def group_duplicates(duplicate_pairs):
         count += len(group)
     return count, groups
 
-def find_duplicate_images(local_dir_path: str, threshold: float = 0.9) -> List[List[str]]:
+
+def find_dup_imgs(
+                          local_dir_path: str,
+                          threshold: float = 0.9
+) -> List[List[str]]:
     """
     Find duplicate images given a local directory path and a duplicate
     matching threshold.
@@ -117,7 +124,7 @@ def find_duplicate_images(local_dir_path: str, threshold: float = 0.9) -> List[L
     """
     duplicates = find_duplicates(local_dir_path, threshold)
     count, groups = group_duplicates(duplicates)
-    print(f"Found {count} duplicates. Done finding duplicates.")
+    print(f"Found {count} non-unique images. Done finding non-unique images.")
     return groups
 
 # # Old code from the model's author

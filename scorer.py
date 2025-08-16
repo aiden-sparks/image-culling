@@ -19,6 +19,7 @@ def score_images(local_dir_path: str) -> Dict[str, Dict[str, float]]:
     - A dictionary with filenames as the keys and a dict of qualities and
     their scores for that image as the values
     """
+    print("Scoring images...")
     # Load processor and backbone model
     processor = CLIPProcessor.from_pretrained("rsinema/aesthetic-scorer")
     clip_model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
@@ -45,7 +46,7 @@ def score_images(local_dir_path: str) -> Dict[str, Dict[str, float]]:
     for image_path in image_paths:
         # Score image
         image_name = os.path.basename(image_path)
-        print(f"Scoring {image_name} ({img_count}/{num_images})")
+        # print(f"Scoring {image_name} ({img_count}/{num_images})")
         img_count += 1
         image = Image.open(image_path)
         inputs = processor(images=image, return_tensors="pt")["pixel_values"]
